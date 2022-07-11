@@ -1,0 +1,6 @@
+### Spreadsheet ###
+*.xlr
+*.xls
+*.xlsx
+
+*myvars*
