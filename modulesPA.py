@@ -1,4 +1,15 @@
 
+from pymodbus.client.sync import ModbusTcpClient
+
+def queryMP(ipAdrs):
+    client = ModbusTcpClient(ipAdrs)
+    client.connect()
+    # registers are addressed starting from zero, so we need to subtract 1 from the address
+    # energy data is stored in two consecutive registers
+    result = client.read_holding_registers(2699, 2, unit=0x00)
+    client.close()
+    return result.registers
+
 def conv754toDEC(msw, lsw):
     denom = 0x800000
     mantissa = 0
