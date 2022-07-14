@@ -30,3 +30,12 @@ def conv754toDEC(msw, lsw):
     else:
         sign = 1
     return (sign * (1 + mantissa) * 2**expon);
+
+def consolePrint(rawNum, trueNum):
+    print("",rawNum)
+    print(" Pot Activa Acum:  ", trueNum,"kWh")
+    print("-")
+
+def errorPrint(e):
+    print(" :(  Error, :: ", e)
+    print("-")
