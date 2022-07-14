@@ -2,11 +2,11 @@
 from pymodbus.client.sync import ModbusTcpClient
 
 def queryMP(ipAdrs):
-    client = ModbusTcpClient(ipAdrs)
-    client.connect()
+    client = ModbusTcpClient(ipAdrs, timeout=1)
     # registers are addressed starting from zero, so we need to subtract 1 from the address
     # energy data is stored in two consecutive registers
-    result = client.read_holding_registers(2699, 2, unit=0x00)
+    unit=0x02 if ipAdrs == "192.168.20.45" else 0x00
+    result = client.read_holding_registers(2699, 2, unit=unit)
     client.close()
     return result.registers
 
