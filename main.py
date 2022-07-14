@@ -1,25 +1,21 @@
 
-import modulesPA as mp
+import modulesPM as mp
 import myvars as mv
 import datetime
-import openpyxl
 
-print("-\n--\n---\n----\n-----\n------")
+print("-\n--\n---\n----")
 
 # iterate over the devices wich are defined in list at myvars.py file
 for idx, ipAdrs in enumerate(mv.ipAddressList):
-    ip = ipAdrs[0]
-    name =  ipAdrs[1]
-    print(ip, "\n", name)
+    ip, name = mp.pickAddress(ipAdrs)
     try:
-        rawDataFloat32 = mp.queryMP(ip)
-        energyValue = mp.conv754toDEC(*rawDataFloat32)
-        mp.consolePrint(rawDataFloat32, energyValue)
+        result = mp.queryPmData(ip)
     except(Exception) as e:
-        mp.errorPrint(e)
+        result = e
+    mp.consolePrint(result, ip, name)
     
-
+    
 dateAndTime = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+print("\nMOMENTO DE CAPTURA: ", dateAndTime)
 
-print("\n", "MOMENTO DE CAPTURA: ", dateAndTime)
-print("---\n--\n-")
+print("----\n---\n--\n-")

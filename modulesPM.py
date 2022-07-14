@@ -1,14 +1,21 @@
 
 from pymodbus.client.sync import ModbusTcpClient
+import openpyxl
+import datetime
 
-def queryMP(ipAdrs):
+def pickAddress(ipAdrs):
+    ip = ipAdrs[0]
+    name =  ipAdrs[1]
+    return ip, name
+
+def queryPmData(ipAdrs):
     client = ModbusTcpClient(ipAdrs, timeout=1)
     # registers are addressed starting from zero, so we need to subtract 1 from the address
     # energy data is stored in two consecutive registers
     unit=0x02 if ipAdrs == "192.168.20.45" else 0x00
     result = client.read_holding_registers(2699, 2, unit=unit)
     client.close()
-    return result.registers
+    return conv754toDEC(*result.registers)
 
 def conv754toDEC(msw, lsw):
     denom = 0x800000
@@ -31,11 +38,12 @@ def conv754toDEC(msw, lsw):
         sign = 1
     return (sign * (1 + mantissa) * 2**expon);
 
-def consolePrint(rawNum, trueNum):
-    print("",rawNum)
-    print(" Pot Activa Acum:  ", trueNum,"kWh")
-    print("-")
+def consolePrint(result, ip, name):
+    print(ip, "\n", name)
+    if type(result) == float:
+        print(" Pot Activa Acum:  ", result,"kWh")
+        print("-")
+    else:
+        print(" :(  Error, :: ", result)
+        print("-")
 
-def errorPrint(e):
-    print(" :(  Error, :: ", e)
-    print("-")
