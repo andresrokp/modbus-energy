@@ -10,7 +10,8 @@ def pickAddress(ipAdrs):
 
 def queryPmData(ipAdrs):
     client = ModbusTcpClient(ipAdrs, timeout=1)
-    # registers are addressed starting from zero, so we need to subtract 1 from the address
+    # registers are addressed starting from zero, 
+    # so we need to subtract 1 from the address
     # energy data is stored in two consecutive registers
     unit=0x02 if ipAdrs == "192.168.20.45" else 0x00
     result = client.read_holding_registers(2699, 2, unit=unit)
@@ -47,3 +48,23 @@ def consolePrint(result, ip, name):
         print(" :(  Error, :: ", result)
         print("-")
 
+def xlxsPrint(dataLogger):
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.append([" "])
+    ws.merge_cells('A1:C1')
+    ws.append(["REGISTRO DE CONSUMO ACUMULADO MEDIDORES DE ENERGÍA"])
+    moment = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    ws.append(['MOMENTO DE LA CAPTURA: ',moment])
+    ws.append([" "])
+    ws.append([" "])
+    
+    ws.append(["Nombre", "IP", "Pot Activa Acum"])
+    ws.append([" "])
+    for log in dataLogger:
+        print(log)
+        ws.append(log)
+    
+    fileFriendlyMoment = moment.replace(":", "-").replace("/", "-")
+    wb.save(f'PMs {fileFriendlyMoment}.xlsx')
+    wb.close()
