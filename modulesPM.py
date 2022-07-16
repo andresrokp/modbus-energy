@@ -9,7 +9,7 @@ def pickAddress(ipAdrs):
     return ip, name
 
 def queryPmData(ipAdrs):
-    client = ModbusTcpClient(ipAdrs, timeout=1)
+    client = ModbusTcpClient(ipAdrs, timeout=2)
     # registers are addressed starting from zero, 
     # so we need to subtract 1 from the address
     # energy data is stored in two consecutive registers
@@ -52,10 +52,10 @@ def xlxsPrint(dataLogger):
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.append([" "])
-    ws.merge_cells('A1:C1')
-    ws.append(["REGISTRO DE CONSUMO ACUMULADO MEDIDORES DE ENERGÍA"])
+    ws.merge_cells('A2:C2')
+    ws['A2'] = "REGISTRO DE CONSUMO ACUMULADO MEDIDORES DE ENERGÍA"
     moment = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    ws.append(['MOMENTO DE LA CAPTURA: ',moment])
+    ws.append(['Momento captura: '+moment])
     ws.append([" "])
     ws.append([" "])
     
