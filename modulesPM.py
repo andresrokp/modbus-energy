@@ -1,4 +1,5 @@
 
+from genericpath import exists
 from pymodbus.client.sync import ModbusTcpClient
 import openpyxl
 import datetime
@@ -13,7 +14,7 @@ def queryPmData(ipAdrs):
     # registers are addressed starting from zero, 
     # so we need to subtract 1 from the address
     # energy data is stored in two consecutive registers
-    unit=0x02 if ipAdrs == "192.168.20.45" else 0x00
+    unit=0x02 if ["192.168.20.45", "192.168.25.10"].count(ipAdrs) else 0x00
     result = client.read_holding_registers(2699, 2, unit=unit)
     client.close()
     return conv754toDEC(*result.registers)
