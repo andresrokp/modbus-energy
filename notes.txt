@@ -1,0 +1,39 @@
+
+
+@@@ THE UI
+
+Explore freely
+    Look for the data
+Examine the HTML elements
+
+Find relevant triggers
+	'Next 20 records' button
+
+
+
+@@@ THE CODE
+
+@ function mbtte_prev20Records()  :: line 289
+
+    Identify key structures
+        2 big behaviors
+            1 section to define some variables
+            1 section to call a function
+        2 main conditions
+            evaluates who is the parent  >>> if #dataLog or '#maintLog
+    Identify called function
+        mbtte_getDataLogData()  ::  line 454
+            just when the parent is dataLog
+            before they seem to clear 'dataLogBuffer' and 'dataLogTable'
+
+        mbtte_getMaintLogData() ::  line 466
+    Conclude functionality
+
+        
+
+
+@ function mbtte_getDataLogData ()
+
+    key structures
+        a conditional evaluatig 'currentLogIndex' >>> if == 0 or to currentLogIndex
+    
