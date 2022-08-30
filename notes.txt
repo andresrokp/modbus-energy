@@ -25,15 +25,31 @@ Find relevant triggers
         mbtte_getDataLogData()  ::  line 454
             just when the parent is dataLog
             before they seem to clear 'dataLogBuffer' and 'dataLogTable'
-
         mbtte_getMaintLogData() ::  line 466
     Conclude functionality
 
         
 
 
-@ function mbtte_getDataLogData ()
+@ function mbtte_getDataLogData () :: line 480
 
     key structures
         a conditional evaluatig 'currentLogIndex' >>> if == 0 or to currentLogIndex
-    
+        case is == to -1 : a lot of indexes assignments
+        case is == to lastLogIndex : call fcn, some DOM hiding
+    functions call
+        mbtte_displayDataLogData()  :: line 513
+            when currentLogIndex == lastLogIndex
+
+
+@ mbtte_displayDataLogData() :: 
+
+
+cool site to check
+    https://www.binaryconvert.com/convert_double.html
+google
+    binary int64
+key idea 64bit
+    A 64-bit signed integer. It has a minimum value of -9,223,372,036,854,775,808 and a 
+    maximum value of 9,223,372,036,854,775,807 (inclusive). A 64-bit unsigned integer. 
+    It has a minimum value of 0 and a maximum value of (2^64)-1 (inclusive).
