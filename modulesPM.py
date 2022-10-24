@@ -1,5 +1,4 @@
 
-from genericpath import exists
 from pymodbus.client.sync import ModbusTcpClient
 import openpyxl
 import datetime
